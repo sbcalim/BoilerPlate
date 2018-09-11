@@ -21,12 +21,28 @@ find_package(Boost REQUIRED)
 include_directories(${PROJECT_BINARY_DIR})
 include_directories(${LIBRARY_OUTPUT_PATH})
 include_directories("${PROJECT_BINARY_DIR}/Logger")
+include_directories("${PROJECT_BINARY_DIR}/ConfigManager")
 include_directories(SYSTEM ${Boost_INCLUDE_DIR})
 
-set(BOOST_LIBS "-lpthread -lboost_chrono -lboost_thread -lboost_system -lboost_program_options -lboost_date_time -lboost_locale -lboost_regex -lboost_log_setup -lboost_log")
+set(BOOST_LIBS "\
+-lpthread \
+-lboost_chrono \
+-lboost_thread \
+-lboost_system \
+-lboost_program_options \
+-lboost_date_time \
+-lboost_locale \
+-lboost_regex \
+-lboost_log_setup \
+-lboost_log")
 
 add_subdirectory("Logger")
-set(EXTRA_LIBS ${EXTRA_LIBS} Logger)
+add_subdirectory("ConfigManager")
+
+set(EXTRA_LIBS ${EXTRA_LIBS}
+        Logger
+        ConfigManager
+        )
 
 add_executable(BoilerPlate main.cpp)
 target_link_libraries(BoilerPlate ${EXTRA_LIBS} ${BOOST_LIBS})
